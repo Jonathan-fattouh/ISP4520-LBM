@@ -130,3 +130,23 @@ You can use minicom, picocom, tio,…
 ```bash
 tio /dev/serial/by-id/usb-SEGGER_J-Link_*-if00
 ```
+
+## ISP4520 Support
+
+This fork adds support for ISP4520 modules.
+
+Go to periodic_uplink repoertory and run:
+
+```bash
+west build --board isp4520-eu
+# or
+west build --board isp4520-us
+# or
+west build --board isp4520-as
+```
+
+Then to flash the module run:
+
+```bash
+west flash
+```
