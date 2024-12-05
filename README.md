@@ -135,14 +135,14 @@ tio /dev/serial/by-id/usb-SEGGER_J-Link_*-if00
 
 This fork adds support for ISP4520 modules.
 
-Go to periodic_uplink repoertory and run:
+Go to the `periodical_uplink` sample directory and run:
 
 ```bash
-west build --board isp4520-eu
+west build -b isp4520-eu
 # or
-west build --board isp4520-us
+west build -b isp4520-us
 # or
-west build --board isp4520-as
+west build -b isp4520-as
 ```
 
 Then to flash the module run:
