@@ -24,7 +24,7 @@
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
 		zephyr,code-partition = &slot0_partition;
-		zephyr,lora-transceiver = &lora_semtech_sx126xmb1xxs;
+		zephyr,lora-transceiver = &sx1261;
 	};
 
 	leds {
@@ -93,7 +93,7 @@
 		mcuboot-button0 = &button0;
 		mcuboot-led0 = &led0;
 		watchdog0 = &wdt0;
-		lora-transceiver = &lora_semtech_sx126xmb1xxs;
+		lora-transceiver = &sx1261;
 		smtc-hal-uart = &uart0;
         smtc-watchdog = &wdt;
 		smtc-user-button = &button0;
@@ -174,16 +174,19 @@
 	pinctrl-1 = <&spi2_sleep>;
 	pinctrl-names = "default", "sleep";
 	
-	lora_semtech_sx126xmb1xxs: lora@0 {
+	sx1261: lora@0 {
+		compatible = "semtech,sx1261-new";
         reg = <0>;
-        spi-max-frequency = <DT_FREQ_M(4)>;
+        spi-max-frequency = <DT_FREQ_M(8)>;
         reset-gpios = <&gpio0 19 GPIO_ACTIVE_LOW>;
         busy-gpios = <&gpio0 27 GPIO_ACTIVE_HIGH>;
         dio1-gpios = <&gpio0 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+		reg-mode = <SX126X_REG_MODE_DCDC>;
         dio2-as-rf-switch;
-        reg-mode = <SX126X_REG_MODE_LDO>;
-        tcxo-wakeup-time = <0>;
+		dio3-as-tcxo-control;
+        tcxo-wakeup-time = <8>;
         tcxo-voltage = <SX126X_TCXO_SUPPLY_1_8V>;
+		rx-boosted;
     };
 };
 
@@ -211,11 +214,4 @@
 			reg = <0x0007a000 0x00006000>;
 		};
 	};
-};
-
-lora_semtech_sx1261mb1xxs: &lora_semtech_sx126xmb1xxs {
-	compatible = "semtech,sx1261-new";
-	reg-mode = <SX126X_REG_MODE_DCDC>;
-	dio3-as-tcxo-control;
-	tcxo-wakeup-time = <8>;
 };
